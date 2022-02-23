@@ -7,8 +7,30 @@ const computerPlay = function() {
     if(randomVal <= 1) return "scissors";
 }
 
-const playerChoice = (prompt('Rock,paper or scissors?')).trim().toLocaleLowerCase();
-const computerChoice = computerPlay();
+
+
+let playerChoice;
+let computerChoice;
+const btnElements = document.querySelector(".btns");
+
+
+
+btnElements.addEventListener('click', function(e) {
+    e.preventDefault();
+    const object = e.target.textContent.toLowerCase();
+    if(!e.target.classList.contains('btn')) {
+        return
+    } else {
+        computerChoice = computerPlay();
+        playerChoice = object;
+
+        return console.log(playRound(playerChoice, computerChoice));
+    }
+    
+});
+
+
+
 
 const playRound = function(playerChoice, computerChoice) {
     
@@ -39,4 +61,3 @@ const playRound = function(playerChoice, computerChoice) {
     
 };
 
-console.log(playRound(playerChoice, computerChoice));
