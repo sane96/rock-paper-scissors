@@ -1,18 +1,28 @@
 'use strict';
 
+let playerChoice;
+let computerChoice;
+const btnElements = document.querySelector(".btns");
+let scoreboardText = document.querySelector('.scoreboard-text').textContent;
+let scorePlayer = document.getElementById('score-player').textContent;
+let scoreComputer = document.getElementById('score-computer').textContent;
+const gameOver = document.getElementById('game-over');
+let gameOverText = document.querySelector('.game-over-text');
+let scorePlayerNumb;
+let scoreComputerNumb;
+scorePlayerNumb = 0;
+scoreComputerNumb = 0;
+scorePlayer = String(scorePlayerNumb);
+scoreComputer = String(scoreComputerNumb);
+
+gameOverText = 'Hey';
+
 const computerPlay = function() {
     let randomVal = Math.random();
     if(randomVal <= 0.33) return "rock";
     if(randomVal <= 0.66) return "paper";
     if(randomVal <= 1) return "scissors";
 }
-
-
-
-let playerChoice;
-let computerChoice;
-const btnElements = document.querySelector(".btns");
-
 
 
 btnElements.addEventListener('click', function(e) {
@@ -24,7 +34,11 @@ btnElements.addEventListener('click', function(e) {
         computerChoice = computerPlay();
         playerChoice = object;
 
-        return console.log(playRound(playerChoice, computerChoice));
+        scoreboardText = playRound(playerChoice, computerChoice);
+        scorePlayer = String(scorePlayerNumb);
+        scoreComputer = String(scoreComputerNumb);
+        return console.log(scoreboardText);
+
     }
     
 });
@@ -53,6 +67,9 @@ const playRound = function(playerChoice, computerChoice) {
 
     let winObj1 = (winNumb == 1 ? playerChoice : computerChoice)
     let winObj2 = winObj1[0].toUpperCase() + winObj1.slice(1);
+
+    if(winNumb == 1) scorePlayerNumb++; 
+    if(winNumb == 2) scoreComputerNumb++;
 
     if(!winNumb) {
         return "It's a tie!";
