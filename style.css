@@ -15,7 +15,7 @@
     align-items: center;
 }
 
-.headline, .scoreboard, .game-over {
+.headline, .scoreboard, .game-over-text {
    color: rgb(235, 235, 235); 
    
 }
@@ -61,7 +61,21 @@
 }
 
 .score h1 {
-    font-size: 48px;
+    font-size: 64px;
+    margin: .5rem 1rem;
+}
+
+.scoreboard-text-wrap {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.scoreboard-text {
+
+    font-size: 32px;
     margin: .5rem 1rem;
 }
 
@@ -81,7 +95,9 @@
     width: 100vw;
     height: 20vh;
 }
-/* 
+
+
+
 .hidden {
     visibility: hidden;
-} */
+} 

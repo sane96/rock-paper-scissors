@@ -3,47 +3,63 @@
 let playerChoice;
 let computerChoice;
 const btnElements = document.querySelector(".btns");
-let scoreboardText = document.querySelector('.scoreboard-text').textContent;
-let scorePlayer = document.getElementById('score-player').textContent;
-let scoreComputer = document.getElementById('score-computer').textContent;
-const gameOver = document.getElementById('game-over');
+let scoreboardText = document.querySelector('.scoreboard-text');
+let scorePlayer = document.getElementById('score-player');
+let scoreComputer = document.getElementById('score-computer');
+let gameOver = document.getElementById('game-over');
 let gameOverText = document.querySelector('.game-over-text');
+let reset = document.getElementById('reset');
 let scorePlayerNumb;
 let scoreComputerNumb;
 scorePlayerNumb = 0;
 scoreComputerNumb = 0;
-scorePlayer = String(scorePlayerNumb);
-scoreComputer = String(scoreComputerNumb);
+scorePlayer.textContent = String(scorePlayerNumb);
+scoreComputer.textContent = String(scoreComputerNumb);
 
-gameOverText = 'Hey';
+
+
 
 const computerPlay = function() {
-    let randomVal = Math.random();
-    if(randomVal <= 0.33) return "rock";
-    if(randomVal <= 0.66) return "paper";
-    if(randomVal <= 1) return "scissors";
+    const rps = ['rock', 'paper', 'scissors']
+    let randomVal = Math.floor(Math.random()*rps.length);
+    return rps[randomVal];
 }
 
 
-btnElements.addEventListener('click', function(e) {
+
+
+const oneRound = function(e) {
     e.preventDefault();
     const object = e.target.textContent.toLowerCase();
-    if(!e.target.classList.contains('btn')) {
-        return
-    } else {
-        computerChoice = computerPlay();
-        playerChoice = object;
 
-        scoreboardText = playRound(playerChoice, computerChoice);
-        scorePlayer = String(scorePlayerNumb);
-        scoreComputer = String(scoreComputerNumb);
-        return console.log(scoreboardText);
+    if(!e.target.classList.contains('btn')) return;
 
+    computerChoice = computerPlay();
+    playerChoice = object;
+
+    scoreboardText.textContent = playRound(playerChoice, computerChoice);
+    console.log(scorePlayerNumb, scoreComputerNumb);
+    scorePlayer.textContent = String(scorePlayerNumb);
+    scoreComputer.textContent = String(scoreComputerNumb);
+    if (scorePlayerNumb == 5 || scoreComputerNumb  == 5) {
+        
+        gameOverText.textContent = `Game over! ${scorePlayerNumb == 5 ? 'Player' : 'Computer'} won. Try again?`
+        gameOver.classList.remove('hidden')
+
+        return this.removeEventListener('click', oneRound);
     }
-    
-});
+}
 
+btnElements.addEventListener('click', oneRound);
 
+reset.addEventListener('click', function(e) {
+    e.preventDefault();
+    scorePlayer.textContent = '0';
+    scoreComputer.textContent = '0';
+    scoreboardText.textContent = '';
+    gameOver.classList.add('hidden');
+    return btnElements.addEventListener('click', oneRound);
+})
 
 
 const playRound = function(playerChoice, computerChoice) {
@@ -51,15 +67,11 @@ const playRound = function(playerChoice, computerChoice) {
     let winNumb;
     if(playerChoice == computerChoice) {
         winNumb = 0;
-    }  else if(playerChoice == 'rock' && computerChoice == 'scissors'){
-        winNumb = 1;
-    } else if(playerChoice == 'rock' && computerChoice == 'paper'){
-        winNumb = 2;
-    } else if(playerChoice == 'paper' && computerChoice == 'rock'){
-        winNumb = 1;
-    } else if(playerChoice == 'paper' && computerChoice == 'scissors'){
-        winNumb = 2;
-    } else if(playerChoice == 'scissors' && computerChoice == 'paper'){
+    } else if(
+        playerChoice == 'rock' && computerChoice == 'scissors' ||
+        playerChoice == 'paper' && computerChoice == 'rock' ||
+        playerChoice == 'scissors' && computerChoice == 'paper'
+    ) {
         winNumb = 1;
     } else {
         winNumb = 2;
