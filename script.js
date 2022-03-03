@@ -54,8 +54,10 @@ btnElements.addEventListener('click', oneRound);
 
 reset.addEventListener('click', function(e) {
     e.preventDefault();
-    scorePlayer.textContent = '0';
-    scoreComputer.textContent = '0';
+    scorePlayerNumb = 0;
+    scoreComputerNumb = 0;
+    scorePlayer.textContent = String(scorePlayerNumb);
+    scoreComputer.textContent = String(scoreComputerNumb);
     scoreboardText.textContent = '';
     gameOver.classList.add('hidden');
     return btnElements.addEventListener('click', oneRound);
